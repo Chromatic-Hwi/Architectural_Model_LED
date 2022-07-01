@@ -12,6 +12,13 @@ int DIP2 = 51;
 int DIP3 = 49;
 int DIP4 = 47;
 
+if (digitalRead(DIP1)==1 && digitalRead(DIP1)==0 && digitalRead(DIP1)==0 && digitalRead(DIP1)==0){
+    int LIGHT_TIME=1;
+    }
+else{
+    int LIGHT_TIME=0;
+    }
+
 void setup() {
   Serial.begin(9600);
   pinMode(UNIT1, OUTPUT);//PWM unit1
@@ -27,10 +34,13 @@ void setup() {
   pinMode(DIP2, INPUT);//점등 시간 조정을 위한 2진 자리2
   pinMode(DIP3, INPUT);//점등 시간 조정을 위한 2진 자리3
   pinMode(DIP4, INPUT);//점등 시간 조정을 위한 2진 자리4
+
+  
 }
 
 void loop() {
   while(true){
+    /*
     Serial.print(digitalRead(DIP1));
     Serial.print("-");
     Serial.print(digitalRead(DIP2));
@@ -38,7 +48,9 @@ void loop() {
     Serial.print(digitalRead(DIP3));
     Serial.print("-");
     Serial.println(digitalRead(DIP4));
-    delay(1000);
+    delay(1000);*/
+
+    Serial.println(LIGHT_TIME);
 
     /*
     //Default 동작, 전체 웨이브
