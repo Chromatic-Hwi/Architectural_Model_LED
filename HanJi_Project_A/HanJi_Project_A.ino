@@ -11,13 +11,15 @@ int DIP1 = 53;
 int DIP2 = 51;
 int DIP3 = 49;
 int DIP4 = 47;
+/*
+int LIGHT_TIME=0;
 
-if (digitalRead(DIP1)==1 && digitalRead(DIP1)==0 && digitalRead(DIP1)==0 && digitalRead(DIP1)==0){
-    int LIGHT_TIME=1;
-    }
+if(digitalRead(DIP1)==1&&digitalRead(DIP1)==0&&digitalRead(DIP1)==0&&digitalRead(DIP1)==0){
+  int LIGHT_TIME=1;
+  }
 else{
-    int LIGHT_TIME=0;
-    }
+  int LIGHT_TIME=0;
+    }*/
 
 void setup() {
   Serial.begin(9600);
@@ -39,38 +41,45 @@ void setup() {
 }
 
 void loop() {
-  while(true){
-    /*
-    Serial.print(digitalRead(DIP1));
-    Serial.print("-");
-    Serial.print(digitalRead(DIP2));
-    Serial.print("-");
-    Serial.print(digitalRead(DIP3));
-    Serial.print("-");
-    Serial.println(digitalRead(DIP4));
-    delay(1000);*/
+  /*
+  int LIGHT_TIME=0;
+  if(digitalRead(DIP1)==1&&digitalRead(DIP1)==0&&digitalRead(DIP1)==0&&digitalRead(DIP1)==0){
+    int LIGHT_TIME=1;
+    }
+  else{
+    int LIGHT_TIME=0;
+    }
+  Serial.println(LIGHT_TIME);*/
 
-    Serial.println(LIGHT_TIME);
+  Serial.print(digitalRead(DIP1));
+  Serial.print(digitalRead(DIP2));
+  Serial.print(digitalRead(DIP3));
+  Serial.println(digitalRead(DIP4));
+  delay(100);
+  /*
+  //Default 동작, 전체 웨이브
+  for(int i=0; i<255; i++){
+    analogWrite(UNIT1, i);
+    analogWrite(UNIT2, i);
+    analogWrite(UNIT3, i);
+    analogWrite(UNIT4, i);
+    analogWrite(UNIT5, i);
+    analogWrite(UNIT6, i);
+    analogWrite(UNIT7, i);
 
-    /*
-    //Default 동작, 전체 웨이브
-    for(int i=0; i<255; i++){
-      analogWrite(UNIT1, i);
-      analogWrite(UNIT2, i);
-      analogWrite(UNIT3, i);
-      analogWrite(UNIT4, i);
-      analogWrite(UNIT5, i);
-      analogWrite(UNIT6, i);
-      analogWrite(UNIT7, i);
-  
-      Serial.println(i);
-      delay(10);   
-    }*/
-    /*
-    for(int i=255; i>0; i--){
-      analogWrite(led_pin, i);
-      Serial.println(i);
-      delay(100);
-    }*/
+    //Serial.println(i);
+    delay(10);   
   }
+  for(int i=255; i>0; i--){
+    analogWrite(UNIT1, i);
+    analogWrite(UNIT2, i);
+    analogWrite(UNIT3, i);
+    analogWrite(UNIT4, i);
+    analogWrite(UNIT5, i);
+    analogWrite(UNIT6, i);
+    analogWrite(UNIT7, i);
+
+    //Serial.println(i);
+    delay(10);
+  }*/
 }
