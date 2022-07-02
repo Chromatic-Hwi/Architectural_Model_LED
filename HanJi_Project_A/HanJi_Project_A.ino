@@ -7,20 +7,25 @@ int UNIT6 = 7;
 int UNIT7 = 8;
 int TOWER = 31;
 
-int DIP1 = 53;
-int DIP2 = 51;
-int DIP3 = 49;
-int DIP4 = 47;
-/*
-int LIGHT_TIME=0;
+int DIP1 = 47;
+int DIP2 = 49;
+int DIP3 = 51;
+int DIP4 = 53;
 
-if(digitalRead(DIP1)==1&&digitalRead(DIP1)==0&&digitalRead(DIP1)==0&&digitalRead(DIP1)==0){
-  int LIGHT_TIME=1;
+int LIGHT_TIME(int pin4, int pin3, int pin2, int pin1){
+  int T=0;
+  if (pin4==0 && pin3==0 && pin2==0 && pin1==1)
+  return T=1;
+  if (pin4==0 && pin3==0 && pin2==1 && pin1==0)
+  return T=2;
+  if (pin4==0 && pin3==1 && pin2==0 && pin1==0)
+  return T=3;
+  if (pin4==1 && pin3==0 && pin2==0 && pin1==0)
+  return T=4;
+  if (pin4==0 && pin3==0 && pin2==1 && pin1==1)
+  return T=5;
   }
-else{
-  int LIGHT_TIME=0;
-    }*/
-
+        
 void setup() {
   Serial.begin(9600);
   pinMode(UNIT1, OUTPUT);//PWM unit1
@@ -36,50 +41,35 @@ void setup() {
   pinMode(DIP2, INPUT);//점등 시간 조정을 위한 2진 자리2
   pinMode(DIP3, INPUT);//점등 시간 조정을 위한 2진 자리3
   pinMode(DIP4, INPUT);//점등 시간 조정을 위한 2진 자리4
-
   
 }
 
 void loop() {
-  /*
-  int LIGHT_TIME=0;
-  if(digitalRead(DIP1)==1&&digitalRead(DIP1)==0&&digitalRead(DIP1)==0&&digitalRead(DIP1)==0){
-    int LIGHT_TIME=1;
-    }
-  else{
-    int LIGHT_TIME=0;
-    }
-  Serial.println(LIGHT_TIME);*/
-
-  Serial.print(digitalRead(DIP1));
-  Serial.print(digitalRead(DIP2));
-  Serial.print(digitalRead(DIP3));
-  Serial.println(digitalRead(DIP4));
-  delay(100);
-  /*
   //Default 동작, 전체 웨이브
   for(int i=0; i<255; i++){
+    Serial.println(LIGHT_TIME(digitalRead(DIP1), digitalRead(DIP1), digitalRead(DIP1), digitalRead(DIP1)));
+    Serial.print(digitalRead(DIP4));
+    Serial.print(digitalRead(DIP3));
+    Serial.print(digitalRead(DIP2));
+    Serial.println(digitalRead(DIP1));
     analogWrite(UNIT1, i);
-    analogWrite(UNIT2, i);
+    /*analogWrite(UNIT2, i);
     analogWrite(UNIT3, i);
     analogWrite(UNIT4, i);
     analogWrite(UNIT5, i);
     analogWrite(UNIT6, i);
-    analogWrite(UNIT7, i);
-
-    //Serial.println(i);
+    analogWrite(UNIT7, i);*/
     delay(10);   
   }
   for(int i=255; i>0; i--){
     analogWrite(UNIT1, i);
+    /*
     analogWrite(UNIT2, i);
     analogWrite(UNIT3, i);
     analogWrite(UNIT4, i);
     analogWrite(UNIT5, i);
     analogWrite(UNIT6, i);
-    analogWrite(UNIT7, i);
-
-    //Serial.println(i);
+    analogWrite(UNIT7, i);*/
     delay(10);
-  }*/
+  }
 }
