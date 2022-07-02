@@ -12,6 +12,14 @@ int DIP2 = 49;
 int DIP3 = 51;
 int DIP4 = 53;
 
+int SW1 = 22;
+int SW2 = 24;
+int SW3 = 26;
+int SW4 = 28;
+int SW5 = 30;
+int SW6 = 32;
+int SW7 = 34;
+
 int LIGHT_TIME(int pin4, int pin3, int pin2, int pin1){
   int T=0;
   if (pin4==0 && pin3==0 && pin2==0 && pin1==1)
@@ -57,20 +65,33 @@ void setup() {
   pinMode(DIP2, INPUT);//점등 시간 조정을 위한 2진 자리2
   pinMode(DIP3, INPUT);//점등 시간 조정을 위한 2진 자리3
   pinMode(DIP4, INPUT);//점등 시간 조정을 위한 2진 자리4
-  
+
+  pinMode(SW1, INPUT);
+  pinMode(SW2, INPUT);
+  pinMode(SW3, INPUT);
+  pinMode(SW4, INPUT);
+  pinMode(SW5, INPUT);
+  pinMode(SW6, INPUT);
+  pinMode(SW7, INPUT);
 }
 
 void loop() {
   while(true){
     //LIGHT_TIME(digitalRead(DIP4), digitalRead(DIP3), digitalRead(DIP2), digitalRead(DIP1));
+    
     //Default 동작, 전체 웨이브
     for(int i=0; i<255; i++){
+      /*
       Serial.println(LIGHT_TIME(digitalRead(DIP4), digitalRead(DIP3), digitalRead(DIP2), digitalRead(DIP1)));
       Serial.print(digitalRead(DIP4));
       Serial.print(digitalRead(DIP3));
       Serial.print(digitalRead(DIP2));
-      Serial.println(digitalRead(DIP1));
+      Serial.println(digitalRead(DIP1));*/
       analogWrite(UNIT1, i);
+      Serial.println(digitalRead(SW1));
+      if (digitalRead(SW1)==1);{
+        break
+        };
       /*analogWrite(UNIT2, i);
       analogWrite(UNIT3, i);
       analogWrite(UNIT4, i);
@@ -81,6 +102,11 @@ void loop() {
       }
     for(int i=255; i>0; i--){
       analogWrite(UNIT1, i);
+      Serial.println(digitalRead(SW1));
+      if (digitalRead(SW1)==1);{
+        break
+        };
+      }
       /*
       analogWrite(UNIT2, i);
       analogWrite(UNIT3, i);
@@ -90,6 +116,8 @@ void loop() {
       analogWrite(UNIT7, i);*/
       delay(10);
       }
+    analogWrite(UNIT2, 100);
+    delay(3000);
     }
   
 }
