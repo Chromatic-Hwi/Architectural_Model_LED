@@ -18,12 +18,28 @@ int LIGHT_TIME(int pin4, int pin3, int pin2, int pin1){
   return T=1;
   if (pin4==0 && pin3==0 && pin2==1 && pin1==0)
   return T=2;
-  if (pin4==0 && pin3==1 && pin2==0 && pin1==0)
-  return T=3;
-  if (pin4==1 && pin3==0 && pin2==0 && pin1==0)
-  return T=4;
   if (pin4==0 && pin3==0 && pin2==1 && pin1==1)
+  return T=3;
+  if (pin4==0 && pin3==1 && pin2==0 && pin1==0)
+  return T=4;
+  if (pin4==0 && pin3==1 && pin2==0 && pin1==1)
   return T=5;
+  if (pin4==0 && pin3==1 && pin2==1 && pin1==0)
+  return T=6;
+  if (pin4==0 && pin3==1 && pin2==1 && pin1==1)
+  return T=7;
+  if (pin4==1 && pin3==0 && pin2==0 && pin1==0)
+  return T=8;
+  if (pin4==1 && pin3==0 && pin2==0 && pin1==1)
+  return T=9;
+  if (pin4==1 && pin3==0 && pin2==1 && pin1==0)
+  return T=10;
+  if (pin4==1 && pin3==0 && pin2==1 && pin1==1)
+  return T=11;
+  if (pin4==1 && pin3==1 && pin2==0 && pin1==0)
+  return T=12;
+  if (pin4==1 && pin3==1 && pin2==0 && pin1==1)
+  return T=13;
   }
         
 void setup() {
@@ -45,31 +61,35 @@ void setup() {
 }
 
 void loop() {
-  //Default 동작, 전체 웨이브
-  for(int i=0; i<255; i++){
-    Serial.println(LIGHT_TIME(digitalRead(DIP1), digitalRead(DIP1), digitalRead(DIP1), digitalRead(DIP1)));
-    Serial.print(digitalRead(DIP4));
-    Serial.print(digitalRead(DIP3));
-    Serial.print(digitalRead(DIP2));
-    Serial.println(digitalRead(DIP1));
-    analogWrite(UNIT1, i);
-    /*analogWrite(UNIT2, i);
-    analogWrite(UNIT3, i);
-    analogWrite(UNIT4, i);
-    analogWrite(UNIT5, i);
-    analogWrite(UNIT6, i);
-    analogWrite(UNIT7, i);*/
-    delay(10);   
-  }
-  for(int i=255; i>0; i--){
-    analogWrite(UNIT1, i);
-    /*
-    analogWrite(UNIT2, i);
-    analogWrite(UNIT3, i);
-    analogWrite(UNIT4, i);
-    analogWrite(UNIT5, i);
-    analogWrite(UNIT6, i);
-    analogWrite(UNIT7, i);*/
-    delay(10);
-  }
+  while(true){
+    //LIGHT_TIME(digitalRead(DIP4), digitalRead(DIP3), digitalRead(DIP2), digitalRead(DIP1));
+    //Default 동작, 전체 웨이브
+    for(int i=0; i<255; i++){
+      Serial.println(LIGHT_TIME(digitalRead(DIP4), digitalRead(DIP3), digitalRead(DIP2), digitalRead(DIP1)));
+      Serial.print(digitalRead(DIP4));
+      Serial.print(digitalRead(DIP3));
+      Serial.print(digitalRead(DIP2));
+      Serial.println(digitalRead(DIP1));
+      analogWrite(UNIT1, i);
+      /*analogWrite(UNIT2, i);
+      analogWrite(UNIT3, i);
+      analogWrite(UNIT4, i);
+      analogWrite(UNIT5, i);
+      analogWrite(UNIT6, i);
+      analogWrite(UNIT7, i);*/
+      delay(10);   
+      }
+    for(int i=255; i>0; i--){
+      analogWrite(UNIT1, i);
+      /*
+      analogWrite(UNIT2, i);
+      analogWrite(UNIT3, i);
+      analogWrite(UNIT4, i);
+      analogWrite(UNIT5, i);
+      analogWrite(UNIT6, i);
+      analogWrite(UNIT7, i);*/
+      delay(10);
+      }
+    }
+  
 }
