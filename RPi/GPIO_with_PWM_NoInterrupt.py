@@ -13,6 +13,14 @@ GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #switch5
 GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #switch6
 GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #switch7
 
+"""
+# 2진 조합을 통한 점등 시간 조절
+GPIO.setup(, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) 
+GPIO.setup(, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) 
+GPIO.setup(, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) 
+"""
+
 GPIO.setup(13, GPIO.OUT) #PWM1
 
 GPIO.setup(14, GPIO.OUT) #Unit1
@@ -28,6 +36,48 @@ GPIO.setup(21, GPIO.OUT) #Unit7
 WAVE=GPIO.PWM(13, 6000)
 WAVE.start(0)
 
+"""
+B1=GPIO.input()
+B2=GPIO.input()
+B3=GPIO.input()
+B4=GPIO.input()
+# 4-3-2-1 순
+
+if (B4==0 and B3==0 and B2==0 and B1==0):
+    SEC=
+if (B4==0 and B3==0 and B2==0 and B1==1):
+    SEC=1
+    
+if (B4==0 and B3==0 and B2==1 and B1==0):
+    SEC=2
+    
+if (B4==0 and B3==0 and B2==1 and B1==1):
+    SEC=3
+    
+if (B4==0 and B3==1 and B2==0 and B1==0):
+    SEC=4
+    
+if (B4==0 and B3==1 and B2==0 and B1==1):
+    SEC=5
+    
+if (B4==0 and B3==1 and B2==1 and B1==0):
+    SEC=6
+    
+if (B4==0 and B3==1 and B2==1 and B1==1):
+    SEC=7
+    
+if (B4==1 and B3==0 and B2==0 and B1==0):
+    SEC=8
+    
+if (B4==1 and B3==0 and B2==0 and B1==1):
+    SEC=9
+
+if (B4==1 and B3==0 and B2==1 and B1==0):
+    SEC=10
+
+2진 조합 결과가 10진 10 이상 부터는 SEC는 동일한 순으로 다시 증가하되, PWM신호의 속도나 밝기를 조절하도록 설정
+사용 설명표가 필요할듯 함.
+"""
 SEC=5
 
 SELECT="wave" #초기 상태 선언
@@ -35,7 +85,7 @@ SELECT="wave" #초기 상태 선언
 try:
     while(True):
         if SELECT=="wave":
-            for DUTY in range(1, 101, 10):
+            for DUTY in range(0, 101, 10):
                 SW1=GPIO.input(4)
                 SW2=GPIO.input(17)
                 SW3=GPIO.input(27)
@@ -50,7 +100,7 @@ try:
                 GPIO.output(13, DUTY)
                 time.sleep(0.1)
                 
-            for DUTY in range(99, 1, -10):
+            for DUTY in range(100, -1, -10):
                 SW1=GPIO.input(4)
                 SW2=GPIO.input(17)
                 SW3=GPIO.input(27)
