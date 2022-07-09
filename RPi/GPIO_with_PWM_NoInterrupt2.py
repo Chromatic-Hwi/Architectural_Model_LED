@@ -12,6 +12,7 @@ GPIO.setup(22, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #switch4
 GPIO.setup(5, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #switch5
 GPIO.setup(6, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #switch6
 GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #switch7
+GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #switch8
 
 """
 # 2진 조합을 통한 점등 시간 조절
@@ -24,12 +25,13 @@ GPIO.setup(, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(13, GPIO.OUT) #PWM1
 
 GPIO.setup(14, GPIO.OUT) #Unit1
-GPIO.setup(23, GPIO.OUT) #Unit2
-GPIO.setup(24, GPIO.OUT) #Unit3
-GPIO.setup(25, GPIO.OUT) #Unit4
-GPIO.setup(16, GPIO.OUT) #Unit5
-GPIO.setup(20, GPIO.OUT) #Unit6
-GPIO.setup(21, GPIO.OUT) #Unit7
+GPIO.setup(15, GPIO.OUT) #Unit2
+GPIO.setup(23, GPIO.OUT) #Unit3
+GPIO.setup(24, GPIO.OUT) #Unit4
+GPIO.setup(25, GPIO.OUT) #Unit5
+GPIO.setup(16, GPIO.OUT) #Unit6
+GPIO.setup(20, GPIO.OUT) #Unit7
+GPIO.setup(21, GPIO.OUT) #Unit8
 
 #===================================================================
 
@@ -93,7 +95,8 @@ try:
                 SW5=GPIO.input(5)
                 SW6=GPIO.input(6)
                 SW7=GPIO.input(19)
-                if SW1==1 or SW2==1 or SW3==1 or SW4==1 or SW5==1 or SW6==1 or SW7==1:
+                SW7=GPIO.input(26)
+                if SW1==1 or SW2==1 or SW3==1 or SW4==1 or SW5==1 or SW6==1 or SW7==1 or SW8==1:
                     SELECT="unit"
                     break
                 WAVE.ChangeDutyCycle(DUTY)
@@ -108,7 +111,8 @@ try:
                 SW5=GPIO.input(5)
                 SW6=GPIO.input(6)
                 SW7=GPIO.input(19)
-                if SW1==1 or SW2==1 or SW3==1 or SW4==1 or SW5==1 or SW6==1 or SW7==1:
+                SW7=GPIO.input(26)
+                if SW1==1 or SW2==1 or SW3==1 or SW4==1 or SW5==1 or SW6==1 or SW7==1 or SW8==1:
                     SELECT="unit"
                     break
                 WAVE.ChangeDutyCycle(DUTY)
@@ -122,26 +126,30 @@ try:
                 time.sleep(SEC)
                 GPIO.output(14, False)
             if SW2==1:
+                GPIO.output(15, True)
+                time.sleep(SEC)
+                GPIO.output(15, False)
+            if SW3==1:
                 GPIO.output(23, True)
                 time.sleep(SEC)
                 GPIO.output(23, False)
-            if SW3==1:
+            if SW4==1:
                 GPIO.output(24, True)
                 time.sleep(SEC)
                 GPIO.output(24, False)
-            if SW4==1:
+            if SW5==1:
                 GPIO.output(25, True)
                 time.sleep(SEC)
                 GPIO.output(25, False)
-            if SW5==1:
+            if SW6==1:
                 GPIO.output(16, True)
                 time.sleep(SEC)
                 GPIO.output(16, False)
-            if SW6==1:
+            if SW7==1:
                 GPIO.output(20, True)
                 time.sleep(SEC)
                 GPIO.output(20, False)
-            if SW7==1:
+            if SW8==1:
                 GPIO.output(21, True)
                 time.sleep(SEC)
                 GPIO.output(21, False)
