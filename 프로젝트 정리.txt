@@ -1,0 +1,99 @@
+◈SW Style1
+DC 12V, 10A 입력
+기계적인 연결로 에러가 발생할 확률이 낮음.
+
+입력받은 전력은 전체를 점등하는 입력단으로 갈지, 버튼으로 개별 조작할지 결정하는 스위치에 가장 먼저 도달.
+이때 조작 스위치는 토글 스위치를 사용하였음. (6PDT Toggle Switch)
+
+토글 스위치의 선택에 따라 전체 점등을 선택하면 하나의 전력이 7개의 채널로 분배되어 병렬 연결되며, 
+이때 개별 유닛들과도 연결되어 있기 때문에 전류가 역류하여 스위치 조작시 하나의 유닛 선택이 전체 유닛으로 전달되어 모두 점등되는 문제 방지 필요
+역류방지를 위해서는 10A10 다이오드를 사용했음. 10A의 정격 입력 용량을 가지기 때문에 충분히 전력을 버틸거라 예상. 약 0.7-0.8V 정도의 전압 강하 발생
+하지만 문제가 될 정도의 밝기 변화는 감지되지 않았음.
+
+개별 유닛 점등 선택시 택트 스위치가 On되면 개별 LED 유닛에 전력 전달.
+이때 택트 스위치(=버튼)에 장착된 LED는 3.6V, 20mA 에 작동하기 때문에 전압과 전류값 강하가 필요, 저항 배치로 해결했음.
+
+====================================================================================================
+◈SW Style2
+DC 12V, 10A 입력
+
+NPN 파워 달링턴 트랜지스터를 사용하여 마이크로 프로세서의 출력 전압을 상승시켜 공급하는 방식.
+릴레이 스위치를 사용하려 했으나 5V 전압에도 불구 전류값이 모자란지 제대로 작동하지 않았음.
+
+아두이노 메가와 라즈베리파이를 모두 사용, 유선으로 연결
+
+라즈베리 파이
+입력 단자 : 4, 17, 27, 22, 5, 6, 19
+출력 단자 : 14, 15, 23, 24, 25, 16, 20,    21
+
+아두이노
+디지털 입력 : 24, 26, 28, 30, 32, 34, 36,   40 
+디지털 출력 : 31
+PWM 출력 : 2, 3, 4, 5, 6, 7, 8, 9
+
+라즈베리 파이의 기본 상태는 버튼 입력이 없는 상태로 현재 상태를 정의하는 21번 단자에서 0을 출력하도록 설정되어 있다. (boot bash.rc에서 자동 실행)
+라즈베리 21번 단자는 아두이노의 40번 단자로 입력되며, 40번 단자에 0(=LOW)가 입력되는 동안은 PWM 9번 포트에서 최저와 최고 출력 사이를 반복하는 Wave 동작을 실시한다.
+
+버튼을 누르게 되면 0이었던 라즈베리의 입력 단자에 High 신호가 들어가게 된다. 버튼1의 경우 4번 단자로 연결되며 
+4번 단자 High 감지 -> 버튼 1에 해당되는 14번 포트로 High 출력 -> 아두이노의 버튼 1담당 디지털 입력인 24번 포트로 입력 순으로 진행된다.
+아두이노는 출력 전압이 5V이기 때문에 보다 용이한 전압 조절이 가능하며, 버튼1의 경우 PWM2번 단자에서 250(거의 최댓값)의 출력을 변화없이 고정 출력한다.
+버튼1을 누르게 되면 라즈베리에서 아두이노로 전달하여 최종적으로는 고정 밝기로 Unit1의 LED가 점등되는 것이다.
+
+아두이노만 사용해도 가능하겠지만, 인터럽트 포트가 최대 6개인 관계로 코딩과 동작의 용이성을 위해 라즈베리파이도 혼용했다.
+
+아두이노에서 출력된 5V 신호는 TIP142 달링턴 파워 NPN 트랜지스터와 저항을 거쳐 12V로 승압되어 전달된다.
+
+이번 모델에서는 트랜지스터 승압 과정중 회로 연결의 문제가 근본 원인이었으며, 라즈베리와 아두이노는 정상 동작을 확인하였다.
+
+===========================================================================================================================
+◈부품 구매 및 참조 사이트
+<IC 114> 유명한 전자 부품 취급 판매처, 부산 서면 근처  '협신전자'라는 오프라인 스토어가 있어 구매가 용이하다.	
+https://www.ic114.com/WebSite/THEME/001/default.aspx
+
+<엘레파츠> 전자 부품과 교육기기, 도서까지 취급하는 종합 판매처
+https://www.eleparts.co.kr/main/index
+
+<디바이스 마트> 대학교의 부품 구매, 대회 물품 구매 등에서 자주 선택되는 판매처, 판매 물품도 많고 견적서 처리도 깔끔하다.
+https://www.devicemart.co.kr/main/indexhttps://www.devicemart.co.kr/main/index
+
+<진홍물산> 네이버 스토어로도 구매 가능한 소품목 구매처, 취급하는 물건 종류는 적지만, 중요 물품을 필요한만큼 구매하긴 편하다.
+https://smartstore.naver.com/jinhongcokr?NaPm=ct%3Dl5l14td5%7Cci%3Dshopn%7Ctr%3Dslsl%7Chk%3D2e93f14aa325f3bef6047d983ac083e2d0ebf0ae%7Ctrx%3Dundefined
+
+<페달파츠> 기타 이펙터 자작 사이트로 소자나 커넥터, 스위치 등이 다른 곳과 다른 상품이 있어 활용하면 좋다.
+https://www.pedalparts.co.kr:14021/shop/main/index.php
+
+https://www.youtube.com/watch?v=qhl894Bpkkw
+
+https://www.youtube.com/watch?v=0rtRtRKKolU&t=965shttps://www.youtube.com/watch?v=0rtRtRKKolU&t=965s
+
+https://www.youtube.com/watch?v=BVMeVGET_Ak&t=122s
+
+https://www.youtube.com/watch?v=0zkptL58G-s&t=112s
+
+https://www.youtube.com/watch?v=gs0erc0TfbI
+
+https://www.youtube.com/watch?v=5hemeiTVIG0&t=966s
+
+https://www.youtube.com/watch?v=xebMupU6LE0&t=588s
+
+https://www.youtube.com/watch?v=RDvItxP_gDk
+
+https://www.youtube.com/watch?v=Jm09y5a6doA
+
+https://youtu.be/PIRj4TapKhw
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+http://itempage3.auction.co.kr/DetailView.aspx?ItemNo=B469859080&frm3=V2
+
+https://blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=windv24&logNo=221668534010
+
+https://www.devicemart.co.kr/goods/view?no=13180960
+
+https://blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=wizled2264&logNo=221575585728
+
+https://nav104.cafe24.com/product/5v-led%EB%B0%94-lg%EC%9D%B4%EB%85%B8%ED%85%8D-3528%EC%B9%A950cm30%EA%B5%AC/62/category/78/display/1/
+
+https://blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=z945&logNo=221071998969
+
+https://ledstar.co.kr/product/dc12v-led-bar-%EA%B5%AD%EC%82%B0-5050-3chip-1%EA%B5%AC-30%EA%B5%AC-72w06a-500mm6mm/69/
